@@ -12,6 +12,7 @@ export interface Case {
   incident_date: string;
   created_at: string;
   documents?: DocumentItem[];
+  documents_count?: number;
 }
 
 export interface DocumentItem {

@@ -12,7 +12,10 @@ import {
   Activity,
   CheckCircle,
   Copy,
-  Check
+  Check,
+  Cpu,
+  ArrowRight,
+  Sparkles
 } from 'lucide-react';
 import { Card, CardContent, CardHeader, CardTitle } from '@/components/ui/card';
 import { Button } from '@/components/ui/button';
@@ -70,96 +73,139 @@ export function LedgerView({
   };
 
   return (
-    <div className="space-y-6">
-      {/* Top Banner & Control Actions */}
-      <div className="flex flex-col md:flex-row md:items-center justify-between gap-4">
-        <div>
-          <h2 className="text-lg font-bold uppercase tracking-wider text-neutral-100 flex items-center gap-2">
-            <Link className="w-5 h-5 text-neutral-300" />
-            Immutable Cryptographic Chain of Custody (Ledger)
-          </h2>
-          <p className="text-xs text-neutral-400 font-mono">
-            Every evidentiary touchpoint (ingest, inspect, redact, sign, verify) recorded in a tamper-evident Merkle hash chain
-          </p>
+    <div className="space-y-8 pb-16 font-sans animate-view-fade">
+      
+      {/* Designer Hero Card with Abstract Blockchain Matrix Art */}
+      <div className="relative bg-white border border-[#e2ded6] rounded-2xl p-7 shadow-xs overflow-hidden flex flex-col md:flex-row items-center justify-between gap-6">
+        
+        {/* Abstract Blockchain Nodes Vector Motif */}
+        <div className="absolute right-0 top-0 pointer-events-none opacity-20">
+          <svg width="340" height="220" viewBox="0 0 340 220" fill="none" xmlns="http://www.w3.org/2000/svg">
+            <rect x="220" y="30" width="60" height="60" rx="16" stroke="black" strokeWidth="1.5" />
+            <rect x="140" y="110" width="60" height="60" rx="16" stroke="#ea4242" strokeWidth="1.8" />
+            <rect x="260" y="130" width="60" height="60" rx="16" stroke="black" strokeWidth="1.5" />
+            <line x1="220" y1="60" x2="170" y2="110" stroke="#ea4242" strokeWidth="1.5" strokeDasharray="3 3" />
+            <line x1="200" y1="140" x2="260" y2="160" stroke="black" strokeWidth="1.5" />
+            <circle cx="170" cy="110" r="4" fill="#ea4242" />
+            <circle cx="200" cy="140" r="4" fill="black" />
+          </svg>
         </div>
 
-        <div className="flex items-center gap-2 flex-wrap">
+        <div className="relative z-10 space-y-2 max-w-2xl">
+          <div className="flex items-center gap-2.5">
+            <div className="w-8 h-8 rounded-xl bg-black text-white flex items-center justify-center text-xs shadow-xs">
+              <Link className="w-4 h-4 text-[#ea4242]" />
+            </div>
+            <span className="text-[10px] font-bold text-white bg-[#ea4242] px-2.5 py-0.5 rounded-md uppercase tracking-wider">
+              Merkle Tree Audit Enclave
+            </span>
+          </div>
+          <h1 className="text-2xl md:text-3xl font-extrabold tracking-tight text-neutral-900 font-sans">
+            Cryptographic Chain of Custody Ledger
+          </h1>
+          <p className="text-xs text-neutral-600 leading-relaxed">
+            Every evidentiary touchpoint (ingest, inspect, redact, sign, verify) recorded in a tamper-evident Merkle hash chain with RSA-2048 PKI digital signatures.
+          </p>
+
+          {/* Quick Metrics Bar */}
+          <div className="flex flex-wrap items-center gap-2.5 pt-2">
+            <span className="text-xs font-bold bg-[#f6f4f1] text-neutral-900 px-3 py-1 rounded-xl border border-[#e2ded6]">
+              {blocks.length} Cryptographic Blocks
+            </span>
+            <span className="text-xs font-bold bg-[#f6f4f1] text-neutral-900 px-3 py-1 rounded-xl border border-[#e2ded6]">
+              NIST SHA-256 Chained
+            </span>
+            <span className="text-xs font-bold bg-emerald-100 text-emerald-800 px-3 py-1 rounded-xl border border-emerald-300 flex items-center gap-1.5">
+              <ShieldCheck className="w-3.5 h-3.5 text-emerald-700" /> Zero Tamper Guarantee
+            </span>
+          </div>
+        </div>
+
+        {/* Action Buttons */}
+        <div className="relative z-10 flex flex-col sm:flex-row items-stretch sm:items-center gap-2.5 w-full md:w-auto">
           <Button
             variant="outline"
-            size="sm"
+            size="default"
             onClick={onRefreshLedger}
-            className="gap-1.5"
+            className="h-11 px-4 gap-2 font-bold text-xs rounded-xl border-[#e2ded6] bg-white hover:bg-[#ece8e1] text-neutral-800"
           >
-            <RefreshCw className="w-3.5 h-3.5" />
-            Re-verify Chain
+            <RefreshCw className="w-4 h-4" />
+            Re-verify
           </Button>
 
           <Button
             variant="destructive"
-            size="sm"
+            size="default"
             onClick={handleTamperClick}
             disabled={isTampering}
-            className="gap-1.5 text-neutral-200"
+            className="h-11 px-4 gap-2 font-bold text-xs bg-[#ea4242] hover:bg-[#d43838] text-white rounded-xl shadow-xs shrink-0"
             title="Demonstrate how the system catches unauthorized database tampering"
           >
-            <AlertTriangle className="w-3.5 h-3.5 text-neutral-400" />
-            {isTampering ? 'Simulating...' : 'Simulate Tamper (Block #2)'}
+            <AlertTriangle className="w-4 h-4" />
+            {isTampering ? 'Testing...' : 'Simulate Tamper (Block #2)'}
           </Button>
 
           <Button
-            variant="secondary"
-            size="sm"
+            variant="default"
+            size="default"
             onClick={handleResetClick}
             disabled={isResetting}
-            className="gap-1.5"
+            className="h-11 px-4 gap-2 font-bold text-xs bg-black hover:bg-neutral-800 text-white rounded-xl shadow-xs shrink-0"
           >
-            <RotateCcw className="w-3.5 h-3.5" />
-            {isResetting ? 'Restoring...' : 'Restore Pristine State'}
+            <RotateCcw className="w-4 h-4 text-[#ea4242]" />
+            {isResetting ? 'Restoring...' : 'Restore State'}
           </Button>
         </div>
       </div>
 
       {/* Integrity Status Alert Box */}
       <div
-        className={`p-4 rounded-sm border font-mono text-xs transition-all ${
+        className={`p-6 rounded-[32px] border transition-all duration-300 ${
           isIntact
-            ? 'border-neutral-700 bg-neutral-900/60 text-neutral-200'
-            : 'border-white bg-white text-black font-semibold shadow-2xl'
+            ? 'border-[#e8e5df] bg-white text-neutral-900 shadow-sm'
+            : 'border-2 border-[#ea4242] bg-[#ea4242] text-white font-semibold shadow-2xl ring-4 ring-[#ea4242]/20'
         }`}
       >
-        <div className="flex items-center justify-between gap-4">
-          <div className="flex items-center gap-3">
+        <div className="flex flex-col md:flex-row md:items-center justify-between gap-6">
+          <div className="flex items-center gap-4">
             {isIntact ? (
-              <ShieldCheck className="w-6 h-6 text-neutral-200 shrink-0" />
+              <div className="w-12 h-12 rounded-2xl bg-emerald-50 text-emerald-600 border border-emerald-100 flex items-center justify-center shrink-0 shadow-2xs">
+                <ShieldCheck className="w-7 h-7" />
+              </div>
             ) : (
-              <ShieldAlert className="w-6 h-6 text-black shrink-0 animate-bounce" />
+              <div className="w-12 h-12 rounded-2xl bg-white text-[#ea4242] flex items-center justify-center shrink-0 animate-bounce shadow-lg">
+                <ShieldAlert className="w-7 h-7" />
+              </div>
             )}
             <div>
-              <div className="text-sm font-bold uppercase tracking-wider">
+              <div className="text-base font-extrabold tracking-tight">
                 {isIntact
-                  ? 'Cryptographic Chain Status: 100% UNBROKEN & VERIFIED'
+                  ? 'Cryptographic Chain Status: 100% UNBROKEN & MATHEMATICALLY VERIFIED'
                   : `CRITICAL INTEGRITY VIOLATION DETECTED AT BLOCK #${brokenIndex}!`}
               </div>
-              <p className={isIntact ? 'text-neutral-400 text-[11px] mt-0.5' : 'text-neutral-800 text-[11px] mt-0.5'}>
-                {health?.ledger_details?.reason || 'All block hashes mathematically align with NIST SHA-256 criteria.'}
+              <p className={isIntact ? 'text-neutral-500 text-xs mt-1 font-medium' : 'text-white/90 text-xs mt-1 font-medium'}>
+                {health?.ledger_details?.reason || 'All block hashes mathematically align with NIST FIPS 180-4 SHA-256 criteria.'}
               </p>
             </div>
           </div>
 
-          <div className="text-right">
-            <span className="block text-[10px] uppercase font-bold">Total Chained Blocks</span>
-            <span className="text-base font-bold">{blocks.length}</span>
+          <div className="text-right shrink-0">
+            <span className={`block text-[11px] uppercase font-bold tracking-wider ${isIntact ? 'text-neutral-400' : 'text-white/80'}`}>
+              Total Verified Blocks
+            </span>
+            <span className="text-3xl font-extrabold font-mono">{blocks.length}</span>
           </div>
         </div>
       </div>
 
       {/* Chronological Blocks Timeline */}
       <div className="space-y-4">
-        <div className="text-[11px] font-mono text-neutral-400 uppercase tracking-wider px-1">
-          Chronological Merkle Ledger Entries (Oldest to Newest)
+        <div className="flex items-center justify-between px-2 text-xs font-bold text-neutral-500 uppercase tracking-wider">
+          <span>Chronological Merkle Ledger Entries (Block #1 to #{blocks.length})</span>
+          <span className="text-[11px] text-neutral-400 font-mono">Linked with SHA-256</span>
         </div>
 
-        <div className="space-y-3">
+        <div className="space-y-4">
           {blocks.map((block) => {
             const isBrokenBlock = !isIntact && brokenIndex === block.block_id;
             let detailsObj: any = {};
@@ -172,54 +218,56 @@ export function LedgerView({
             return (
               <Card
                 key={block.block_id}
-                className={`transition-all ${
+                className={`transition-all bg-white rounded-[32px] p-7 shadow-sm ${
                   isBrokenBlock
-                    ? 'border-2 border-white bg-neutral-900 text-white'
-                    : 'border-neutral-800 bg-neutral-950/80 hover:border-neutral-700'
+                    ? 'border-2 border-[#ea4242] ring-4 ring-[#ea4242]/20 shadow-xl'
+                    : 'border-[#e8e5df] hover:border-black/30'
                 }`}
               >
-                <div className="p-4 space-y-3 font-mono text-xs">
+                <div className="space-y-5">
                   {/* Block Header */}
-                  <div className="flex flex-wrap items-center justify-between gap-2 border-b border-neutral-800/80 pb-2.5">
-                    <div className="flex items-center gap-2">
-                      <span className="font-bold text-neutral-100 bg-neutral-900 border border-neutral-700 px-2 py-0.5 rounded-xs text-xs">
+                  <div className="flex flex-wrap items-center justify-between gap-3 border-b border-[#f1eee8] pb-4">
+                    <div className="flex items-center gap-2.5">
+                      <span className={`font-mono text-xs font-extrabold px-3.5 py-1 rounded-full border ${
+                        isBrokenBlock ? 'bg-[#ea4242] text-white border-[#ea4242]' : 'bg-[#f6f4f1] text-neutral-900 border-[#e8e5df]'
+                      }`}>
                         BLOCK #{block.block_id}
                       </span>
-                      <Badge variant="solid" className="text-[9px] bg-neutral-200 text-black">
+                      <Badge variant={isBrokenBlock ? 'warning' : 'solid'} className="text-xs font-bold">
                         {block.action}
                       </Badge>
                       {block.doc_id && (
-                        <span className="text-neutral-400 text-[11px]">
+                        <span className="text-neutral-500 text-xs font-mono font-medium">
                           Doc: {block.doc_id}
                         </span>
                       )}
                       {block.case_id && (
-                        <span className="text-neutral-500 text-[11px]">
+                        <span className="text-neutral-400 text-xs font-mono">
                           ({block.case_id})
                         </span>
                       )}
                     </div>
 
-                    <div className="flex items-center gap-2 text-neutral-400 text-[11px]">
-                      <Clock className="w-3.5 h-3.5 text-neutral-500" />
+                    <div className="flex items-center gap-2 text-neutral-400 text-xs font-mono">
+                      <Clock className="w-4 h-4" />
                       <span>{formatDate(block.timestamp)}</span>
                     </div>
                   </div>
 
                   {/* Actor & Action Details */}
-                  <div className="grid grid-cols-1 md:grid-cols-3 gap-3 p-3 bg-neutral-900/30 border border-neutral-900 rounded-xs text-[11px]">
+                  <div className="grid grid-cols-1 md:grid-cols-3 gap-5 p-5 bg-[#f6f4f1]/70 border border-[#e8e5df] rounded-[24px] text-xs">
                     <div>
-                      <span className="text-neutral-500 text-[10px] block uppercase">Custodial Actor</span>
-                      <span className="text-neutral-200 font-semibold">{block.actor_name}</span>
-                      <span className="text-neutral-400 block text-[10px]">{block.actor_role} ({block.actor_id})</span>
+                      <span className="text-neutral-400 text-[10px] block uppercase font-bold">Custodial Signatory</span>
+                      <span className="text-neutral-900 font-bold text-sm block mt-0.5">{block.actor_name}</span>
+                      <span className="text-neutral-500 block text-xs mt-0.5">{block.actor_role} ({block.actor_id})</span>
                     </div>
 
                     <div className="md:col-span-2">
-                      <span className="text-neutral-500 text-[10px] block uppercase">Action Payload & Audit Context</span>
-                      <div className="text-neutral-300 space-y-0.5 mt-0.5 text-[10px]">
+                      <span className="text-neutral-400 text-[10px] block uppercase font-bold">Action Payload & Audit Context</span>
+                      <div className="text-neutral-700 space-y-1 mt-1 font-mono text-xs">
                         {Object.entries(detailsObj).map(([k, v]) => (
                           <div key={k} className="truncate">
-                            <strong className="text-neutral-400">{k}:</strong> {String(v)}
+                            <strong className="text-neutral-500">{k}:</strong> {String(v)}
                           </div>
                         ))}
                       </div>
@@ -227,46 +275,48 @@ export function LedgerView({
                   </div>
 
                   {/* Cryptographic Linkage Hashes */}
-                  <div className="grid grid-cols-1 md:grid-cols-2 gap-3 text-[10px] pt-1 border-t border-neutral-900">
+                  <div className="grid grid-cols-1 md:grid-cols-2 gap-4 text-xs pt-1 border-t border-[#f1eee8]">
                     <div>
-                      <span className="text-neutral-500 block uppercase mb-0.5">Previous Block Hash:</span>
-                      <div className="flex items-center gap-1.5">
-                        <code className="text-neutral-400 bg-neutral-900 border border-neutral-800 px-2 py-0.5 rounded-xs break-all">
+                      <span className="text-neutral-400 text-[10px] uppercase font-bold block mb-1">Previous Block Hash:</span>
+                      <div className="flex items-center gap-2">
+                        <code className="text-neutral-600 bg-[#f6f4f1] border border-[#e8e5df] px-3 py-1.5 rounded-xl break-all font-mono text-xs">
                           {block.previous_hash}
                         </code>
                         <button
                           onClick={() => handleCopy(block.previous_hash)}
-                          className="text-neutral-500 hover:text-white p-0.5 cursor-pointer"
+                          className="text-neutral-400 hover:text-black p-1.5 rounded-full hover:bg-neutral-100 cursor-pointer"
+                          title="Copy previous hash"
                         >
-                          {copiedHash === block.previous_hash ? <Check className="w-3 h-3 text-white" /> : <Copy className="w-3 h-3" />}
+                          {copiedHash === block.previous_hash ? <Check className="w-4 h-4 text-emerald-600" /> : <Copy className="w-4 h-4" />}
                         </button>
                       </div>
                     </div>
 
                     <div>
-                      <span className="text-neutral-500 block uppercase mb-0.5">Current Block Hash (SHA-256):</span>
-                      <div className="flex items-center gap-1.5">
-                        <code className="text-neutral-200 font-semibold bg-neutral-900 border border-neutral-700 px-2 py-0.5 rounded-xs break-all">
+                      <span className="text-neutral-400 text-[10px] uppercase font-bold block mb-1">Current Block Hash (SHA-256):</span>
+                      <div className="flex items-center gap-2">
+                        <code className="text-neutral-900 font-bold bg-[#f6f4f1] border border-[#e8e5df] px-3 py-1.5 rounded-xl break-all font-mono text-xs">
                           {block.block_hash}
                         </code>
                         <button
                           onClick={() => handleCopy(block.block_hash)}
-                          className="text-neutral-500 hover:text-white p-0.5 cursor-pointer"
+                          className="text-neutral-400 hover:text-black p-1.5 rounded-full hover:bg-neutral-100 cursor-pointer"
+                          title="Copy current block hash"
                         >
-                          {copiedHash === block.block_hash ? <Check className="w-3 h-3 text-white" /> : <Copy className="w-3 h-3" />}
+                          {copiedHash === block.block_hash ? <Check className="w-4 h-4 text-emerald-600" /> : <Copy className="w-4 h-4" />}
                         </button>
                       </div>
                     </div>
                   </div>
 
                   {/* Digital Signature */}
-                  <div className="text-[10px] text-neutral-500 flex items-center justify-between pt-1">
-                    <span className="flex items-center gap-1">
-                      <Key className="w-3 h-3 text-neutral-400" />
-                      PKI Digital Signature: {truncateHash(block.digital_signature, 14, 10)}
+                  <div className="text-xs text-neutral-400 flex items-center justify-between pt-1">
+                    <span className="flex items-center gap-2 font-mono">
+                      <Key className="w-4 h-4 text-[#ea4242]" />
+                      PKI Digital Signature: {truncateHash(block.digital_signature, 16, 12)}
                     </span>
-                    <span className="text-neutral-400 font-semibold">
-                      RSA-2048 / SHA-256
+                    <span className="text-neutral-700 font-bold font-mono text-xs">
+                      RSA-2048 / SHA-256 Attestation
                     </span>
                   </div>
                 </div>

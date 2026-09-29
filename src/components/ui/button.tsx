@@ -3,27 +3,27 @@ import { cva, type VariantProps } from 'class-variance-authority';
 import { cn } from '@/lib/utils';
 
 const buttonVariants = cva(
-  'inline-flex items-center justify-center gap-2 whitespace-nowrap rounded-sm text-xs font-semibold uppercase tracking-wider transition-colors focus-visible:outline-none focus-visible:ring-1 focus-visible:ring-neutral-400 disabled:pointer-events-none disabled:opacity-50 cursor-pointer',
+  'inline-flex items-center justify-center gap-2 whitespace-nowrap rounded-full text-xs font-medium tracking-normal transition-all focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-black/20 disabled:pointer-events-none disabled:opacity-50 cursor-pointer active:scale-[0.98]',
   {
     variants: {
       variant: {
         default:
-          'bg-neutral-100 text-neutral-900 shadow hover:bg-neutral-200 active:bg-neutral-300',
+          'bg-black text-white shadow-xs hover:bg-neutral-800 active:bg-neutral-900',
         destructive:
-          'bg-neutral-900 text-neutral-100 border border-neutral-700 hover:bg-neutral-800 hover:border-neutral-500',
+          'bg-[#ea4242] text-white shadow-xs hover:bg-[#d43838] active:bg-[#c22e2e]',
         outline:
-          'border border-neutral-700 bg-neutral-950 text-neutral-200 hover:bg-neutral-900 hover:text-white hover:border-neutral-500',
+          'border border-[#dcd8cf] bg-white text-neutral-800 hover:bg-[#f6f4f1] hover:border-[#b5b1a6]',
         secondary:
-          'bg-neutral-800 text-neutral-100 hover:bg-neutral-700 border border-neutral-700',
+          'bg-[#f1eee8] text-neutral-900 hover:bg-[#e8e4dc] border border-transparent',
         ghost:
-          'hover:bg-neutral-900 text-neutral-300 hover:text-white',
-        link: 'text-neutral-300 underline-offset-4 hover:underline',
+          'hover:bg-[#f1eee8] text-neutral-700 hover:text-black',
+        link: 'text-black underline-offset-4 hover:underline',
       },
       size: {
         default: 'h-9 px-4 py-2',
-        sm: 'h-7 rounded-sm px-3 text-[11px]',
-        lg: 'h-11 rounded-sm px-6 text-sm',
-        icon: 'h-8 w-8',
+        sm: 'h-7 rounded-full px-3 text-[11px]',
+        lg: 'h-11 rounded-full px-6 text-sm',
+        icon: 'h-8 w-8 rounded-full',
       },
     },
     defaultVariants: {
