@@ -112,8 +112,8 @@ export function CourtVerificationView({
             <span className="text-xs font-bold bg-[#f6f4f1] text-neutral-900 px-3 py-1 rounded-xl border border-[#e2ded6]">
               BSA 2023 Statutory Admissibility
             </span>
-            <span className="text-xs font-bold bg-emerald-100 text-emerald-800 px-3 py-1 rounded-xl border border-emerald-300 flex items-center gap-1.5">
-              <ShieldCheck className="w-3.5 h-3.5 text-emerald-700" /> Judicial Scanner Ready
+            <span className="text-xs font-bold font-mono bg-black text-white px-3 py-1 rounded-xl border border-black flex items-center gap-2">
+              <span className="w-2 h-2 rounded-full bg-[#ea4242]" /> JUDICIAL SCANNER READY
             </span>
           </div>
         </div>
@@ -210,8 +210,8 @@ export function CourtVerificationView({
         <Card
           className={`border transition-all rounded-[32px] p-8 shadow-md ${
             result.verified
-              ? 'border-emerald-200 bg-white text-neutral-900'
-              : 'border-2 border-[#ea4242] bg-[#ea4242] text-white shadow-2xl ring-4 ring-[#ea4242]/20'
+              ? 'border-2 border-black bg-white text-neutral-900'
+              : 'border-2 border-[#ea4242] bg-[#ea4242] text-white shadow-2xl'
           }`}
         >
           <div className="space-y-6">
@@ -219,8 +219,8 @@ export function CourtVerificationView({
             <div className={`flex items-center justify-between border-b pb-5 ${result.verified ? 'border-[#f1eee8]' : 'border-white/20'}`}>
               <div className="flex items-center gap-4">
                 {result.verified ? (
-                  <div className="w-14 h-14 rounded-2xl bg-emerald-50 text-emerald-600 border border-emerald-100 flex items-center justify-center shadow-xs">
-                    <ShieldCheck className="w-8 h-8" />
+                  <div className="w-14 h-14 rounded-2xl bg-black text-white flex items-center justify-center shadow-xs">
+                    <Check className="w-8 h-8" />
                   </div>
                 ) : (
                   <div className="w-14 h-14 rounded-2xl bg-white text-[#ea4242] flex items-center justify-center shadow-lg animate-bounce">
@@ -297,7 +297,7 @@ export function CourtVerificationView({
               </div>
             ) : (
               <div className="space-y-4 text-xs">
-                <div className="p-6 border border-white/20 bg-white/10 rounded-[24px] text-white space-y-2.5 backdrop-blur-xs">
+                <div className="p-6 border-2 border-white bg-black/40 rounded-[24px] text-white space-y-2.5">
                   <span className="font-extrabold text-base block uppercase tracking-wider">Forensic Discrepancy Alert:</span>
                   <p className="text-sm leading-relaxed text-white/95">
                     {result.message || 'The submitted document hash does not exist in the police evidence repository, or has been altered post-acquisition. The document fails evidentiary integrity standards.'}

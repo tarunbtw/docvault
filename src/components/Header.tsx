@@ -156,7 +156,7 @@ export function Header({
             title={isLedgerIntact ? 'WORM Cryptographic Chain 100% Intact' : 'Tamper detected in Ledger!'}
             className="hidden sm:flex items-center gap-2.5 text-xs text-neutral-700 hover:text-black py-2 px-3.5 rounded-xl border border-[#e2ded6] bg-white transition-all shadow-2xs cursor-pointer"
           >
-            <span className={`w-2.5 h-2.5 rounded-full ${isLedgerIntact ? 'bg-emerald-600' : 'bg-[#ea4242]'}`} />
+            <span className={`w-2.5 h-2.5 rounded-full ${isLedgerIntact ? 'bg-black' : 'bg-[#ea4242]'}`} />
             <span className="font-bold text-xs">
               {isLedgerIntact ? 'WORM Intact' : 'Tamper Alert'}
             </span>

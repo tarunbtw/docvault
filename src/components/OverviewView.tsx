@@ -125,8 +125,8 @@ export function OverviewView({
         <div className="flex items-center gap-3 text-xs">
           <span className="text-neutral-500 font-semibold">Chain of Custody:</span>
           {isIntact ? (
-            <span className="font-bold text-emerald-800 flex items-center gap-2 bg-emerald-100 px-3.5 py-1.5 rounded-xl border border-emerald-300 transition-all hover:shadow-xs">
-              <ShieldCheck className="w-4 h-4 text-emerald-700" /> 100% UNBROKEN
+            <span className="font-bold text-white flex items-center gap-2 bg-black px-3.5 py-1.5 rounded-xl border border-black shadow-xs font-mono text-xs">
+              <span className="w-2 h-2 rounded-full bg-[#ea4242]" /> 100% UNBROKEN
             </span>
           ) : (
             <span className="font-bold text-white bg-[#ea4242] px-3.5 py-1.5 rounded-xl flex items-center gap-2 animate-pulse">
@@ -341,8 +341,8 @@ export function OverviewView({
                   Fast Evidentiary Actions
                 </span>
               </div>
-              <span className="text-[10px] font-bold text-emerald-800 bg-emerald-100 border border-emerald-300 px-2 py-0.5 rounded-md flex items-center gap-1">
-                <span className="w-1.5 h-1.5 rounded-full bg-emerald-600 animate-pulse" /> Live Session
+              <span className="text-[10px] font-bold text-white bg-black px-2.5 py-1 rounded-lg border border-black flex items-center gap-1.5 font-mono">
+                <span className="w-1.5 h-1.5 rounded-full bg-[#ea4242]" /> LIVE SESSION
               </span>
             </div>
 
@@ -406,7 +406,7 @@ export function OverviewView({
             {/* Custody Chain Integrity Strip */}
             <div className="bg-[#f6f4f1] border border-[#e2ded6] rounded-xl p-3 flex items-center justify-between text-xs">
               <div className="flex items-center gap-2">
-                <ShieldCheck className="w-4 h-4 text-emerald-700" />
+                <Lock className="w-4 h-4 text-black" />
                 <span className="font-semibold text-neutral-800">
                   {health?.ledger_details?.blockCount || 7} Ledger Blocks
                 </span>
@@ -575,7 +575,7 @@ export function OverviewView({
                 <span className="text-xs font-bold text-neutral-900 uppercase tracking-wider">
                   BSA §63 Integrity Meter
                 </span>
-                <span className="text-[10px] font-bold text-white bg-emerald-700 px-2 py-0.5 rounded-md">
+                <span className="text-[10px] font-bold text-white bg-black px-2.5 py-0.5 rounded-lg border border-black font-mono">
                   VERIFIED
                 </span>
               </div>

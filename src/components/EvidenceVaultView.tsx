@@ -134,8 +134,8 @@ export function EvidenceVaultView({
             <span className="text-xs font-bold bg-[#f6f4f1] text-neutral-900 px-3 py-1 rounded-xl border border-[#e2ded6]">
               NIST FIPS 180-4 Verified
             </span>
-            <span className="text-xs font-bold bg-emerald-100 text-emerald-800 px-3 py-1 rounded-xl border border-emerald-300 flex items-center gap-1.5">
-              <ShieldCheck className="w-3.5 h-3.5 text-emerald-700" /> WORM Lock Active
+            <span className="text-xs font-bold font-mono bg-black text-white px-3 py-1 rounded-xl border border-black flex items-center gap-2">
+              <span className="w-2 h-2 rounded-full bg-[#ea4242]" /> WORM LOCK ACTIVE
             </span>
           </div>
         </div>
@@ -252,7 +252,7 @@ export function EvidenceVaultView({
                             title="Copy full SHA-256 hash"
                           >
                             {copiedHash === doc.sha256_hash ? (
-                              <Check className="w-4 h-4 text-emerald-600" />
+                              <Check className="w-4 h-4 text-black" />
                             ) : (
                               <Copy className="w-4 h-4" />
                             )}
@@ -306,7 +306,7 @@ export function EvidenceVaultView({
 
       {/* Ingest Exhibit Modal */}
       {isUploadOpen && (
-        <div className="fixed inset-0 z-50 bg-black/60 flex items-center justify-center p-4 backdrop-blur-xs">
+        <div className="fixed inset-0 z-50 bg-black/75 flex items-center justify-center p-4">
           <div className="bg-white border border-[#e8e5df] w-full max-w-2xl rounded-[32px] shadow-2xl p-8 space-y-6">
             <div className="flex items-center justify-between border-b border-[#f1eee8] pb-4">
               <h3 className="text-lg font-bold text-neutral-900 flex items-center gap-2.5">

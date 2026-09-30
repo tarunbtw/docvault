@@ -117,8 +117,8 @@ export function CasesView({
             <span className="text-xs font-bold bg-[#f6f4f1] text-neutral-900 px-3 py-1 rounded-xl border border-[#e2ded6]">
               {totalExhibits} Attached Exhibits
             </span>
-            <span className="text-xs font-bold bg-emerald-100 text-emerald-800 px-3 py-1 rounded-xl border border-emerald-300 flex items-center gap-1.5">
-              <ShieldCheck className="w-3.5 h-3.5 text-emerald-700" /> 100% Chain-Intact
+            <span className="text-xs font-bold font-mono bg-black text-white px-3 py-1 rounded-xl border border-black flex items-center gap-2">
+              <span className="w-2 h-2 rounded-full bg-[#ea4242]" /> 100% CHAIN-INTACT
             </span>
           </div>
         </div>
@@ -166,7 +166,7 @@ export function CasesView({
                   onClick={() => setSelectedCaseId(c.case_id)}
                   className={`p-6 rounded-[28px] border cursor-pointer transition-all duration-300 relative group ${
                     isSelected
-                      ? 'border-2 border-black bg-white shadow-lg ring-4 ring-black/5 -translate-y-0.5'
+                      ? 'border-2 border-black bg-white shadow-lg -translate-y-0.5'
                       : 'border-[#e8e5df] bg-white hover:border-black/30 hover:shadow-sm'
                   }`}
                 >
@@ -312,7 +312,7 @@ export function CasesView({
 
       {/* New Case Registration Modal */}
       {isCreateOpen && (
-        <div className="fixed inset-0 z-50 bg-black/60 flex items-center justify-center p-4 backdrop-blur-xs">
+        <div className="fixed inset-0 z-50 bg-black/75 flex items-center justify-center p-4">
           <div className="bg-white border border-[#e8e5df] w-full max-w-xl rounded-[32px] shadow-2xl p-8 space-y-6">
             <div className="flex items-center justify-between border-b border-[#f1eee8] pb-4">
               <h3 className="text-lg font-bold text-neutral-900 flex items-center gap-2.5">

@@ -115,8 +115,8 @@ export function LedgerView({
             <span className="text-xs font-bold bg-[#f6f4f1] text-neutral-900 px-3 py-1 rounded-xl border border-[#e2ded6]">
               NIST SHA-256 Chained
             </span>
-            <span className="text-xs font-bold bg-emerald-100 text-emerald-800 px-3 py-1 rounded-xl border border-emerald-300 flex items-center gap-1.5">
-              <ShieldCheck className="w-3.5 h-3.5 text-emerald-700" /> Zero Tamper Guarantee
+            <span className="text-xs font-bold font-mono bg-black text-white px-3 py-1 rounded-xl border border-black flex items-center gap-2">
+              <span className="w-2 h-2 rounded-full bg-[#ea4242]" /> ZERO TAMPER GUARANTEE
             </span>
           </div>
         </div>
@@ -162,15 +162,15 @@ export function LedgerView({
       <div
         className={`p-6 rounded-[32px] border transition-all duration-300 ${
           isIntact
-            ? 'border-[#e8e5df] bg-white text-neutral-900 shadow-sm'
-            : 'border-2 border-[#ea4242] bg-[#ea4242] text-white font-semibold shadow-2xl ring-4 ring-[#ea4242]/20'
+            ? 'border-2 border-black bg-white text-neutral-900 shadow-sm'
+            : 'border-2 border-[#ea4242] bg-[#ea4242] text-white font-semibold shadow-2xl'
         }`}
       >
         <div className="flex flex-col md:flex-row md:items-center justify-between gap-6">
           <div className="flex items-center gap-4">
             {isIntact ? (
-              <div className="w-12 h-12 rounded-2xl bg-emerald-50 text-emerald-600 border border-emerald-100 flex items-center justify-center shrink-0 shadow-2xs">
-                <ShieldCheck className="w-7 h-7" />
+              <div className="w-12 h-12 rounded-2xl bg-black text-white flex items-center justify-center shrink-0 shadow-2xs">
+                <Check className="w-6 h-6 text-white" />
               </div>
             ) : (
               <div className="w-12 h-12 rounded-2xl bg-white text-[#ea4242] flex items-center justify-center shrink-0 animate-bounce shadow-lg">
@@ -220,7 +220,7 @@ export function LedgerView({
                 key={block.block_id}
                 className={`transition-all bg-white rounded-[32px] p-7 shadow-sm ${
                   isBrokenBlock
-                    ? 'border-2 border-[#ea4242] ring-4 ring-[#ea4242]/20 shadow-xl'
+                    ? 'border-2 border-[#ea4242] shadow-xl'
                     : 'border-[#e8e5df] hover:border-black/30'
                 }`}
               >
@@ -287,7 +287,7 @@ export function LedgerView({
                           className="text-neutral-400 hover:text-black p-1.5 rounded-full hover:bg-neutral-100 cursor-pointer"
                           title="Copy previous hash"
                         >
-                          {copiedHash === block.previous_hash ? <Check className="w-4 h-4 text-emerald-600" /> : <Copy className="w-4 h-4" />}
+                          {copiedHash === block.previous_hash ? <Check className="w-4 h-4 text-black" /> : <Copy className="w-4 h-4" />}
                         </button>
                       </div>
                     </div>
@@ -303,7 +303,7 @@ export function LedgerView({
                           className="text-neutral-400 hover:text-black p-1.5 rounded-full hover:bg-neutral-100 cursor-pointer"
                           title="Copy current block hash"
                         >
-                          {copiedHash === block.block_hash ? <Check className="w-4 h-4 text-emerald-600" /> : <Copy className="w-4 h-4" />}
+                          {copiedHash === block.block_hash ? <Check className="w-4 h-4 text-black" /> : <Copy className="w-4 h-4" />}
                         </button>
                       </div>
                     </div>

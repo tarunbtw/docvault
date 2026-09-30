@@ -167,7 +167,7 @@ export function DocumentViewerModal({
                 className="text-neutral-400 hover:text-black p-1.5 rounded-lg hover:bg-white border border-transparent hover:border-[#e8e5df] cursor-pointer transition-colors"
                 title="Copy Full SHA-256"
               >
-                {copiedHash === 'sha256' ? <Check className="w-4 h-4 text-emerald-600" /> : <Copy className="w-4 h-4" />}
+                {copiedHash === 'sha256' ? <Check className="w-4 h-4 text-black" /> : <Copy className="w-4 h-4" />}
               </button>
             </div>
 
@@ -228,7 +228,7 @@ export function DocumentViewerModal({
             {/* Ingestion & Custody Metadata */}
             <Card className="bg-white border-[#e8e5df] rounded-[24px] p-5 shadow-2xs">
               <div className="font-semibold text-neutral-900 uppercase tracking-wider text-xs flex items-center gap-2 pb-3 mb-3 border-b border-[#f1eee8]">
-                <ShieldCheck className="w-4 h-4 text-emerald-600" />
+                <Lock className="w-4 h-4 text-black" />
                 Custody Attestation
               </div>
               <div className="space-y-3 text-xs">
@@ -243,8 +243,8 @@ export function DocumentViewerModal({
                 </div>
                 <div>
                   <span className="text-neutral-400 text-[10px] block font-semibold uppercase tracking-wider">Integrity State:</span>
-                  <span className="text-emerald-700 font-medium bg-emerald-50 px-2.5 py-1 rounded-full inline-block mt-1 border border-emerald-100 text-[11px]">
-                    Bit-stream preserved (WORM)
+                  <span className="text-white font-mono font-bold bg-black px-2.5 py-1 rounded-lg inline-block mt-1 border border-black text-[11px]">
+                    BIT-STREAM PRESERVED (WORM)
                   </span>
                 </div>
               </div>
@@ -282,8 +282,8 @@ export function DocumentViewerModal({
                 </Button>
 
                 {document.is_redacted === 1 && (
-                  <div className="p-3 border border-emerald-100 bg-emerald-50 rounded-2xl text-[11px] text-emerald-800">
-                    <span className="font-semibold block mb-0.5">Redaction Recorded</span>
+                  <div className="p-3 border border-black bg-[#f6f4f1] rounded-2xl text-[11px] text-neutral-900">
+                    <span className="font-bold block mb-0.5 text-black">Redaction Recorded</span>
                     Mask layer signed & committed to Merkle ledger with audit reason.
                   </div>
                 )}
