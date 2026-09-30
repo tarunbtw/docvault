@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React, { useState, useRef, useEffect } from 'react';
 import {
   HardDrive,
   Video,
@@ -21,7 +21,9 @@ import {
   Hash,
   Clock,
   User,
-  ShieldAlert
+  ShieldAlert,
+  Upload,
+  Zap
 } from 'lucide-react';
 import type { Case, DocumentItem, HealthStatus } from '@/services/api';
 import type { UserRole } from './Header';
@@ -47,6 +49,8 @@ export function OverviewView({
   const [activeEvidenceFilter, setActiveEvidenceFilter] = useState<'all' | 'forensic' | 'certs'>('all');
   const [isCopiedKey, setIsCopiedKey] = useState(false);
   const [activeCaseIndex, setActiveCaseIndex] = useState(0);
+  const deckContainerRef = useRef<HTMLDivElement>(null);
+  const lastWheelTimeRef = useRef<number>(0);
 
   const isIntact = health?.ledger_details?.intact ?? true;
   const totalExhibits = documents.length;
@@ -65,6 +69,34 @@ export function OverviewView({
   const handleNextCase = () => {
     setActiveCaseIndex((prev) => (prev < cases.length - 1 ? prev + 1 : 0));
   };
+
+  useEffect(() => {
+    const el = deckContainerRef.current;
+    if (!el || cases.length === 0) return;
+
+    const handleWheelScroll = (e: WheelEvent) => {
+      // Trap scroll event: prevent full browser view/window from scrolling
+      e.preventDefault();
+      e.stopPropagation();
+
+      const now = Date.now();
+      // Debounce wheel steps so one notch advances exactly one card
+      if (now - lastWheelTimeRef.current < 180) return;
+
+      if (e.deltaY > 15) {
+        lastWheelTimeRef.current = now;
+        setActiveCaseIndex((prev) => (prev < cases.length - 1 ? prev + 1 : 0));
+      } else if (e.deltaY < -15) {
+        lastWheelTimeRef.current = now;
+        setActiveCaseIndex((prev) => (prev > 0 ? prev - 1 : cases.length - 1));
+      }
+    };
+
+    el.addEventListener('wheel', handleWheelScroll, { passive: false });
+    return () => {
+      el.removeEventListener('wheel', handleWheelScroll);
+    };
+  }, [cases.length]);
 
   // Recent exhibits from database
   const filteredExhibits = documents.filter((doc) => {
@@ -140,13 +172,31 @@ export function OverviewView({
             </div>
           </div>
 
+          {/* Merged Case Docket Quick-Selector Pills */}
+          <div className="flex items-center gap-1.5 overflow-x-auto pb-1 scrollbar-none px-1">
+            {cases.map((c, idx) => {
+              const isSelected = idx === activeCaseIndex;
+              return (
+                <button
+                  key={c.case_id}
+                  onClick={() => setActiveCaseIndex(idx)}
+                  className={`px-3 py-1 rounded-xl text-xs font-mono font-bold transition-all cursor-pointer whitespace-nowrap shrink-0 ${
+                    isSelected
+                      ? 'bg-black text-white shadow-xs scale-[1.02]'
+                      : 'bg-white text-neutral-700 border border-[#e2ded6] hover:bg-[#ece8e1] hover:text-black'
+                  }`}
+                  title={`${c.case_number}: ${c.title}`}
+                >
+                  {c.case_number}
+                </button>
+              );
+            })}
+          </div>
+
           {/* Stacking Card Deck Container: Cases stack BEHIND the WORM Vault Master Card */}
           <div
-            className="relative select-none"
-            onWheel={(e) => {
-              if (e.deltaY > 30) handleNextCase();
-              else if (e.deltaY < -30) handlePrevCase();
-            }}
+            ref={deckContainerRef}
+            className="relative select-none overscroll-contain"
           >
             {/* The Stacking Case Cards Layer (Behind WORM Vault Master Card) */}
             <div className="relative z-10 pb-4">
@@ -282,45 +332,92 @@ export function OverviewView({
             </div>
           </div>
 
-          {/* Quick Case Index / Older Cases Direct Jump */}
-          <div className="bg-white border border-[#e2ded6] rounded-2xl p-5 shadow-xs space-y-3">
-            <div className="text-xs font-bold text-neutral-900 tracking-tight flex items-center justify-between uppercase">
-              <span>All Historical Dockets</span>
-              <span className="font-mono text-neutral-500">{totalCases} Total</span>
+          {/* Fast Evidentiary Operations & Session Custody Hub */}
+          <div className="bg-white border border-[#e2ded6] rounded-2xl p-5 shadow-xs space-y-4">
+            <div className="flex items-center justify-between pb-1 border-b border-[#ece8e1]">
+              <div className="flex items-center gap-2">
+                <Zap className="w-4 h-4 text-[#ea4242]" />
+                <span className="text-xs font-bold text-neutral-900 tracking-tight uppercase">
+                  Fast Evidentiary Actions
+                </span>
+              </div>
+              <span className="text-[10px] font-bold text-emerald-800 bg-emerald-100 border border-emerald-300 px-2 py-0.5 rounded-md flex items-center gap-1">
+                <span className="w-1.5 h-1.5 rounded-full bg-emerald-600 animate-pulse" /> Live Session
+              </span>
             </div>
 
-            <div className="space-y-2 max-h-[220px] overflow-y-auto pr-1">
-              {cases.map((c, idx) => (
-                <div
-                  key={c.case_id}
-                  onClick={() => setActiveCaseIndex(idx)}
-                  className={`p-3 rounded-xl border transition-all cursor-pointer flex items-center justify-between group ${
-                    idx === activeCaseIndex
-                      ? 'border-black bg-[#f6f4f1]'
-                      : 'border-[#ece8e1] hover:border-black/30 hover:bg-[#faf9f7]'
-                  }`}
-                >
-                  <div className="truncate pr-2">
-                    <p className="text-xs font-bold text-neutral-900 group-hover:text-[#ea4242] transition-colors truncate">
-                      {c.case_number}
-                    </p>
-                    <p className="text-[11px] text-neutral-500 truncate">{c.title}</p>
+            {/* Quick Action Buttons */}
+            <div className="space-y-2">
+              <button
+                onClick={() => onNavigateTab('vault')}
+                className="w-full text-left p-3 rounded-xl border border-[#ece8e1] hover:border-black/40 hover:bg-[#f6f4f1] transition-all cursor-pointer group flex items-center justify-between"
+              >
+                <div className="flex items-center gap-3">
+                  <div className="w-8 h-8 rounded-lg bg-black text-white flex items-center justify-center shrink-0 group-hover:bg-[#ea4242] transition-colors">
+                    <Upload className="w-4 h-4" />
                   </div>
-                  <span className={`text-[10px] font-mono font-bold px-2 py-0.5 rounded-md shrink-0 ${
-                    idx === activeCaseIndex ? 'bg-black text-white' : 'bg-[#dedad3] text-neutral-800'
-                  }`}>
-                    {c.documents_count || c.documents?.length || 0} Docs
-                  </span>
+                  <div>
+                    <p className="text-xs font-bold text-neutral-900 group-hover:text-[#ea4242] transition-colors">
+                      Ingest Electronic Evidence
+                    </p>
+                    <p className="text-[11px] text-neutral-500">Seal raw files into WORM storage</p>
+                  </div>
                 </div>
-              ))}
+                <ArrowUpRight className="w-4 h-4 text-neutral-400 group-hover:text-black group-hover:translate-x-0.5 group-hover:-translate-y-0.5 transition-all" />
+              </button>
+
+              <button
+                onClick={() => onNavigateTab('verify')}
+                className="w-full text-left p-3 rounded-xl border border-[#ece8e1] hover:border-black/40 hover:bg-[#f6f4f1] transition-all cursor-pointer group flex items-center justify-between"
+              >
+                <div className="flex items-center gap-3">
+                  <div className="w-8 h-8 rounded-lg bg-[#dedad3] text-neutral-900 flex items-center justify-center shrink-0 group-hover:bg-black group-hover:text-white transition-colors">
+                    <Scale className="w-4 h-4" />
+                  </div>
+                  <div>
+                    <p className="text-xs font-bold text-neutral-900 group-hover:text-[#ea4242] transition-colors">
+                      Courtroom Hash Verifier
+                    </p>
+                    <p className="text-[11px] text-neutral-500">Live SHA-256 integrity match</p>
+                  </div>
+                </div>
+                <ArrowUpRight className="w-4 h-4 text-neutral-400 group-hover:text-black group-hover:translate-x-0.5 group-hover:-translate-y-0.5 transition-all" />
+              </button>
+
+              <button
+                onClick={() => onNavigateTab('certificates')}
+                className="w-full text-left p-3 rounded-xl border border-[#ece8e1] hover:border-black/40 hover:bg-[#f6f4f1] transition-all cursor-pointer group flex items-center justify-between"
+              >
+                <div className="flex items-center gap-3">
+                  <div className="w-8 h-8 rounded-lg bg-[#dedad3] text-neutral-900 flex items-center justify-center shrink-0 group-hover:bg-black group-hover:text-white transition-colors">
+                    <Award className="w-4 h-4" />
+                  </div>
+                  <div>
+                    <p className="text-xs font-bold text-neutral-900 group-hover:text-[#ea4242] transition-colors">
+                      Issue BSA §63 Certificate
+                    </p>
+                    <p className="text-[11px] text-neutral-500">Statutory admissibility report</p>
+                  </div>
+                </div>
+                <ArrowUpRight className="w-4 h-4 text-neutral-400 group-hover:text-black group-hover:translate-x-0.5 group-hover:-translate-y-0.5 transition-all" />
+              </button>
             </div>
 
-            <button
-              onClick={() => onNavigateTab('cases')}
-              className="w-full text-xs font-bold text-neutral-800 hover:text-black pt-2 flex items-center justify-center gap-1.5 cursor-pointer transition-colors border-t border-[#ece8e1]"
-            >
-              Open all case dossiers <ArrowUpRight className="w-4 h-4 text-[#ea4242]" />
-            </button>
+            {/* Custody Chain Integrity Strip */}
+            <div className="bg-[#f6f4f1] border border-[#e2ded6] rounded-xl p-3 flex items-center justify-between text-xs">
+              <div className="flex items-center gap-2">
+                <ShieldCheck className="w-4 h-4 text-emerald-700" />
+                <span className="font-semibold text-neutral-800">
+                  {health?.ledger_details?.blockCount || 7} Ledger Blocks
+                </span>
+              </div>
+              <button
+                onClick={() => onNavigateTab('ledger')}
+                className="font-bold text-[11px] text-[#ea4242] hover:underline cursor-pointer flex items-center gap-1"
+              >
+                Audit Chain <ArrowUpRight className="w-3 h-3" />
+              </button>
+            </div>
           </div>
 
         </div>
